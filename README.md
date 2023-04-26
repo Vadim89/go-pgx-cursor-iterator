@@ -10,7 +10,9 @@ type User struct {
 	Role string `db:"role"`
 }
 values := make([]User, 1000)
-iter, err := NewCursorIterator(pool, values, time.Minute, "SELECT * FROM users WHERE role = $1", "Guest")
+
+ctx := context.Background()
+iter, err := NewCursorIterator(ctx, pool, values, time.Minute, "SELECT * FROM users WHERE role = $1", "Guest")
 if err != nil {
 	panic(err)
 }
